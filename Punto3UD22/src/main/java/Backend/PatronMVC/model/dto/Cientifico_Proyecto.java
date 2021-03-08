@@ -1,6 +1,6 @@
 package Backend.PatronMVC.model.dto;
 
-public class Cientifico_Proyecto {
+public class  Cientifico_Proyecto {
 	
 	private String dniC_fk;
 	private String idP_fk;

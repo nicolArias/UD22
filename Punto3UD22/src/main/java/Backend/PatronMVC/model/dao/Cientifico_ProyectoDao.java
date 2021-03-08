@@ -19,7 +19,7 @@ public class Cientifico_ProyectoDao {
 		
 		try {
 			Statement st = conex.getConnection().createStatement();
-			String sql= "INSERT INTO cientifico_proyecto VALUES ('"+cP.getDniC_fk()+"', '"
+			String sql= "INSERT INTO Cientificos_Proyectos VALUES ('"+cP.getDniC_fk()+"', '"
 					+cP.getIdP_fk()+");";
 			st.executeUpdate(sql);
 			JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
@@ -39,7 +39,7 @@ public class Cientifico_ProyectoDao {
 		Cientifico_Proyecto cP= new Cientifico_Proyecto();
 		boolean existe=false;
 		try {
-			String sql= "SELECT * FROM cientifico_proyecto where  dniC_fk= ? ";
+			String sql= "SELECT * FROM Cientificos_Proyectos where  dniC_fk= ? ";
 			PreparedStatement consulta = conex.getConnection().prepareStatement(sql);
 			consulta.setString(1, dniC);
 			ResultSet res = consulta.executeQuery();
@@ -68,7 +68,7 @@ public class Cientifico_ProyectoDao {
 		
 		Conexion conex= new Conexion();
 		try{
-			String consulta="UPDATE cientifico_proyecto SET idP_fk = ? WHERE dniC_fk= ? ";
+			String consulta="UPDATE  Cientifico_Proyecto SET idP_fk = ? WHERE dniC_fk= ? ";
 			PreparedStatement estatuto = conex.getConnection().prepareStatement(consulta);
 			
             estatuto.setString(1, cP.getIdP_fk());
@@ -92,7 +92,7 @@ public class Cientifico_ProyectoDao {
 	{
 		Conexion conex= new Conexion();
 		try {
-			String sql= "DELETE FROM cientifico_proyecto WHERE dniC_fk='"+dniC+"'";
+			String sql= "DELETE FROM Cientificos_Proyectos WHERE dniC_fk='"+dniC+"'";
 			Statement st = conex.getConnection().createStatement();
 			st.executeUpdate(sql);
             JOptionPane.showMessageDialog(null, " Se ha Eliminado Correctamente","Información",JOptionPane.INFORMATION_MESSAGE);

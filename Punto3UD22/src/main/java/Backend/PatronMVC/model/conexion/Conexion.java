@@ -11,7 +11,7 @@ import java.util.Date;
  *
  */
 public class Conexion {
-   static String bd = "ActividadesMVC";
+   static String bd = "Laboratorio";
    static String login = "remote";
    static String password = "12345*";
    static String url = "jdbc:mysql://192.168.1.136:3306/"+bd+"?useTimezone=true&serverTimezone=UTC";

@@ -1,4 +1,4 @@
-
+ 
 /*
  * Esta parte del patrón es la que define la lógica de administración del sistema, 
  * establece la conexión entre la vista y el modelo.
@@ -6,68 +6,61 @@
 
 package Backend.PatronMVC.controller;
 
+import Backend.PatronMVC.model.dto.Cientifico;
 import Backend.PatronMVC.model.service.CientificoServ;
-import Backend.PatronMVC.view.VentanaBuscar;
-import Backend.PatronMVC.view.VentanaPrincipal;
-import Backend.PatronMVC.view.VentanaRegistro;
+
+import Backend.PatronMVC.view.ViewBuscarCientifico;
+import Backend.PatronMVC.view.ViewRegistroCientifico;
 
 
 public class CientificoController {
 	
 	private CientificoServ cientificoServ;
-	private VentanaPrincipal miVentanaPrincipal;
-	private VentanaRegistro miVentanaRegistro;
-	private VentanaBuscar miVentanaBuscar;
+	private ViewRegistroCientifico miVentanaRegistroC;
+	private ViewBuscarCientifico miVentanaBuscarC;
 	
-	//Metodos getter Setters de vistas
-	public VentanaPrincipal getMiVentanaPrincipal() {
-		return miVentanaPrincipal;
+	public ViewRegistroCientifico getViewRegistroC() {
+		return miVentanaRegistroC;
 	}
-	public void setMiVentanaPrincipal(VentanaPrincipal miVentanaPrincipal) {
-		this.miVentanaPrincipal = miVentanaPrincipal;
+	public void setViewRegistroC(ViewRegistroCientifico miVentanaRegistroC) {
+		this.miVentanaRegistroC = miVentanaRegistroC;
 	}
-	public VentanaRegistro getMiVentanaRegistro() {
-		return miVentanaRegistro;
+	public ViewBuscarCientifico getViewBuscarC() {
+		return miVentanaBuscarC;
 	}
-	public void setMiVentanaRegistro(VentanaRegistro miVentanaRegistro) {
-		this.miVentanaRegistro = miVentanaRegistro;
+	public void setViewBuscarC(ViewBuscarCientifico miVentanaBuscarC) {
+		this.miVentanaBuscarC = miVentanaBuscarC;
 	}
-	public VentanaBuscar getMiVentanaBuscar() {
-		return miVentanaBuscar;
+	public CientificoServ getCientificoServ() {
+		return cientificoServ;
 	}
-	public void setMiVentanaBuscar(VentanaBuscar miVentanaBuscar) {
-		this.miVentanaBuscar = miVentanaBuscar;
-	}
-	public PersonaServ getPersonaServ() {
-		return personaServ;
-	}
-	public void setPersonaServ(PersonaServ personaServ) {
-		this.personaServ = personaServ;
+	public void setCientificoServ(CientificoServ cientificoServ) {
+		this.cientificoServ = cientificoServ;
 	}
 	
 	//Hace visible las vistas de Registro y Consulta
 	public void mostrarVentanaRegistro() {
-		miVentanaRegistro.setVisible(true);
+		miVentanaRegistroC.setVisible(true);
 	}
 	public void mostrarVentanaConsulta() {
-		miVentanaBuscar.setVisible(true);
+		miVentanaBuscarC.setVisible(true);
 	}
 	
 	//Llamadas a los metodos CRUD de la capa service para validar los datos de las vistas
-	public void registrarPersona(Persona miPersona) {
-		personaServ.validarRegistro(miPersona);
+	public void registrarCientifico(Cientifico cientifico) {
+		cientificoServ.validarRegistro(cientifico);
 	}
 	
-	public Persona buscarPersona(String codigoPersona) {
-		return personaServ.validarConsulta(codigoPersona);
+	public Cientifico buscarCientifico(String dni) {
+		return cientificoServ.validarConsulta(dni);
 	}
 	
-	public void modificarPersona(Persona miPersona) {
-		personaServ.validarModificacion(miPersona);
+	public void modificarCientifico(Cientifico cientifico) {
+		cientificoServ.validarModificacion(cientifico);
 	}
 	
-	public void eliminarPersona(String codigo) {
-		personaServ.validarEliminacion(codigo);
+	public void eliminarCientifico(String dni) {
+		cientificoServ.validarEliminacion(dni);
 	}
 
 

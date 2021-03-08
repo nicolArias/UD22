@@ -19,8 +19,8 @@ public class ProyectoDao {
 		
 		try {
 			Statement st = conex.getConnection().createStatement();
-			String sql= "INSERT INTO proyecto VALUES ('"+proyecto.getId()+"', '"
-					+proyecto.getNombre()+"','"+proyecto.getHoras()+");";
+			String sql= "INSERT INTO Proyectos VALUES ("+proyecto.getId()+", "
+					+proyecto.getNombre()+","+proyecto.getHoras()+");";
 			st.executeUpdate(sql);
 			JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
 			System.out.println(sql);
@@ -39,7 +39,7 @@ public class ProyectoDao {
 		Proyecto proyecto= new Proyecto();
 		boolean existe=false;
 		try {
-			String sql= "SELECT * FROM proyecto where id = ? ";
+			String sql= "SELECT * FROM Proyectos where id = ? ";
 			PreparedStatement consulta = conex.getConnection().prepareStatement(sql);
 			consulta.setString(1, id);
 			ResultSet res = consulta.executeQuery();
@@ -69,7 +69,7 @@ public class ProyectoDao {
 		
 		Conexion conex= new Conexion();
 		try{
-			String consulta="UPDATE proyecto SET nombre = ?, horas = ? WHERE id= ? ";
+			String consulta="UPDATE Proyectos SET nombre = ?, horas = ? WHERE id= ? ";
 			PreparedStatement estatuto = conex.getConnection().prepareStatement(consulta);
 			
             estatuto.setString(1, proyecto.getNombre());
@@ -94,7 +94,7 @@ public class ProyectoDao {
 	{
 		Conexion conex= new Conexion();
 		try {
-			String sql= "DELETE FROM proyecto WHERE id='"+id+"'";
+			String sql= "DELETE FROM Proyectos WHERE id='"+id+"'";
 			Statement st = conex.getConnection().createStatement();
 			st.executeUpdate(sql);
             JOptionPane.showMessageDialog(null, " Se ha Eliminado Correctamente","Información",JOptionPane.INFORMATION_MESSAGE);

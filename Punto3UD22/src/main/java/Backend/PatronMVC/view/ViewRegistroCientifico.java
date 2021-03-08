@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Backend.PatronMVC.controller.CientificoController;
-import Backend.PatronMVC.controller.PersonaController;
-import Backend.PatronMVC.model.dto.Persona;
+import Backend.PatronMVC.model.dto.Cientifico;
+
 
 
 public class ViewRegistroCientifico extends JFrame implements ActionListener{
@@ -20,8 +20,8 @@ public class ViewRegistroCientifico extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private CientificoController cientificoController; //objeto cientificoController que permite la relacion entre esta clase y la clase PersonaController
 	private JLabel labelTitulo;
-	private JTextField textDni,textNombre,textProfesion;
-	private JLabel lblDni,lblNombre,lblApellidos;
+	private JTextField textDni,textNomApels;
+	private JLabel lblDni,lblNombre;
 	private JButton botonGuardar,botonCancelar;
 	
 	/**
@@ -31,11 +31,11 @@ public class ViewRegistroCientifico extends JFrame implements ActionListener{
 	public ViewRegistroCientifico() {
 
 		botonGuardar = new JButton();
-		botonGuardar.setBounds(110, 220, 120, 25);
+		botonGuardar.setBounds(110, 184, 120, 25);
 		botonGuardar.setText("Registrar");
 		
 		botonCancelar = new JButton();
-		botonCancelar.setBounds(250, 220, 120, 25);
+		botonCancelar.setBounds(251, 184, 120, 25);
 		botonCancelar.setText("Cancelar");
 
 		labelTitulo = new JLabel();
@@ -49,27 +49,17 @@ public class ViewRegistroCientifico extends JFrame implements ActionListener{
 		getContentPane().add(lblDni);
 		
 		lblNombre=new JLabel();
-		lblNombre.setText("Nombre");
-		lblNombre.setBounds(20, 120, 80, 25);
+		lblNombre.setText("Nombre y Apellidos");
+		lblNombre.setBounds(20, 120, 120, 25);
 		getContentPane().add(lblNombre);
-		
-		lblApellidos=new JLabel();
-		lblApellidos.setText("Apellidos");
-		lblApellidos.setBounds(20, 160, 80, 25);
-		getContentPane().add(lblApellidos);
 		
 		textDni=new JTextField();
 		textDni.setBounds(80, 80, 150, 25);
 		getContentPane().add(textDni);
 		
-		textNombre=new JTextField();
-		textNombre.setBounds(80, 120, 340, 25);
-		getContentPane().add(textNombre);
-		
-
-		textProfesion=new JTextField();
-		textProfesion.setBounds(80, 160, 340, 25);
-		getContentPane().add(textProfesion);
+		textNomApels=new JTextField();
+		textNomApels.setBounds(133, 120, 279, 25);
+		getContentPane().add(textNomApels);
 		
 		botonGuardar.addActionListener(this);
 		botonCancelar.addActionListener(this);
@@ -88,15 +78,14 @@ public class ViewRegistroCientifico extends JFrame implements ActionListener{
 
 	private void limpiar() 
 	{
-		textCod.setText("");
-		textNombre.setText("");
-		textDNI.setText("");
-		textProfesion.setText("");
+		textDni.setText("");
+		textNomApels.setText("");
+	
 	}
 
 
-	public void setCoordinador(PersonaController personaController) {
-		this.personaController=personaController;
+	public void setCoordinador(CientificoController cientificoController) {
+		this.cientificoController=cientificoController;
 	}
 
 
@@ -106,14 +95,11 @@ public class ViewRegistroCientifico extends JFrame implements ActionListener{
 		if (e.getSource()==botonGuardar)
 		{
 			try {
-				Persona miPersona=new Persona();
-				miPersona.setIdPersona(Integer.parseInt(textCod.getText()));
-				miPersona.setNombrePersona(textNombre.getText());
-				miPersona.setTelefonoPersona(Integer.parseInt(textTelefono.getText()));
-				miPersona.setEdadPersona(Integer.parseInt(textDNI.getText()));
-				miPersona.setProfesionPersona(textProfesion.getText());
+				Cientifico cientifico=new Cientifico();
+				cientifico.setDNI(textDni.getText());
+				cientifico.setNomApels(textNomApels.getText());
 				
-				personaController.registrarPersona(miPersona);	
+				cientificoController.registrarCientifico(cientifico);	
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null,"Error en el Ingreso de Datos","Error",JOptionPane.ERROR_MESSAGE);
 				System.out.println(ex);

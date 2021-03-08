@@ -25,7 +25,7 @@ public class CientificoDao
 		
 		try {
 			Statement st = conex.getConnection().createStatement();
-			String sql= "INSERT INTO cientifico VALUES ('"+cientifico.getDNI()+"', '"
+			String sql= "INSERT INTO Cientificos VALUES ('"+cientifico.getDNI()+"', '"
 					+cientifico.getNomApels()+"');";
 			st.executeUpdate(sql);
 			JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
@@ -45,7 +45,7 @@ public class CientificoDao
 		Cientifico cientifico= new Cientifico();
 		boolean existe=false;
 		try {
-			String sql= "SELECT * FROM cientifico where dni = ? ";
+			String sql= "SELECT * FROM Cientificos where dni = ? ";
 			PreparedStatement consulta = conex.getConnection().prepareStatement(sql);
 			consulta.setString(1, dni);
 			ResultSet res = consulta.executeQuery();
@@ -74,7 +74,7 @@ public class CientificoDao
 		
 		Conexion conex= new Conexion();
 		try{
-			String consulta="UPDATE cientifico SET DNI= ? ,nomApels = ? WHERE DNI= ? ";
+			String consulta="UPDATE Cientificos SET DNI= ? ,nomApels = ? WHERE DNI= ? ";
 			PreparedStatement estatuto = conex.getConnection().prepareStatement(consulta);
 			
             estatuto.setString(1, cientifico.getDNI());
@@ -98,7 +98,7 @@ public class CientificoDao
 	{
 		Conexion conex= new Conexion();
 		try {
-			String sql= "DELETE FROM cientifico WHERE DNI='"+dni+"'";
+			String sql= "DELETE FROM Cientificos WHERE DNI='"+dni+"'";
 			Statement st = conex.getConnection().createStatement();
 			st.executeUpdate(sql);
             JOptionPane.showMessageDialog(null, " Se ha Eliminado Correctamente","Información",JOptionPane.INFORMATION_MESSAGE);

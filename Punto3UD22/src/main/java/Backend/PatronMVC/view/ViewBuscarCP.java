@@ -9,26 +9,31 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import Backend.PatronMVC.model.dto.Cientifico;
-import Backend.PatronMVC.model.service.CientificoServ;
+import Backend.PatronMVC.controller.CPController;
 import Backend.PatronMVC.controller.CientificoController;
+import Backend.PatronMVC.model.dto.Cientifico;
+import Backend.PatronMVC.model.dto.Cientifico_Proyecto;
+import Backend.PatronMVC.model.service.CientificoServ;
+import Backend.PatronMVC.model.service.Cientifico_ProyectoServ;
 
+import java.awt.Font;
 
-public class VentanaBuscar  extends JFrame implements ActionListener {
+public class ViewBuscarCP extends JFrame implements ActionListener {
+	
 
 	private static final long serialVersionUID = 1L;
 	
-	private CientificoController cientificoController; //objeto cientificoController que permite la relacion entre esta clase y la clase personaController
+	private CPController cpController; //objeto cientificoController que permite la relacion entre esta clase y la clase personaController
 	private JLabel labelTitulo;
-	private JTextField textDni,textNombre,textApellidos;
-	private JLabel dni,nombre,apellidos;
+	private JTextField textDni,textIdP;
+	private JLabel lblDni,lblIdProyecto;
 	private JButton botonGuardar,botonCancelar,botonBuscar,botonModificar,botonEliminar;
 	
 	/**
 	 * constructor de la clase donde se inicializan todos los componentes
 	 * de la ventana de busqueda
 	 */
-	public VentanaBuscar() {
+	public ViewBuscarCP() {
 
 		botonGuardar = new JButton();
 		botonGuardar.setBounds(50, 220, 120, 25);
@@ -39,7 +44,7 @@ public class VentanaBuscar  extends JFrame implements ActionListener {
 		botonCancelar.setText("Cancelar");
 		
 		botonBuscar = new JButton();
-		botonBuscar.setBounds(170, 80, 50, 25);
+		botonBuscar.setBounds(330, 80, 50, 25);
 		botonBuscar.setText("Ok");
 		
 		botonEliminar = new JButton();
@@ -51,36 +56,27 @@ public class VentanaBuscar  extends JFrame implements ActionListener {
 		botonModificar.setText("Modificar");
 
 		labelTitulo = new JLabel();
-		labelTitulo.setText("Administrar CIENTIFICOS");
-		labelTitulo.setBounds(120, 20, 380, 30);
+		labelTitulo.setText("Administrar Cientificos y Proyectos");
+		labelTitulo.setBounds(50, 39, 380, 30);
 		labelTitulo.setFont(new java.awt.Font("Verdana", 1, 18));
 
-		dni=new JLabel();
-		dni.setText("DNI");
-		dni.setBounds(20, 80, 80, 25);
-		getContentPane().add(dni);
+		lblDni=new JLabel();
+		lblDni.setText("DNI Cientifico");
+		lblDni.setBounds(94, 80, 67, 25);
+		getContentPane().add(lblDni);
 		
-		nombre=new JLabel();
-		nombre.setText("Nombre");
-		nombre.setBounds(20, 120, 80, 25);
-		getContentPane().add(nombre);
-		
-		apellidos=new JLabel();
-		apellidos.setText("Apellidos");
-		apellidos.setBounds(20, 160, 80, 25);
-		getContentPane().add(apellidos);
+		lblIdProyecto=new JLabel();
+		lblIdProyecto.setText("Id Proyecto");
+		lblIdProyecto.setBounds(94, 120, 67, 25);
+		getContentPane().add(lblIdProyecto);
 		
 		textDni=new JTextField();
-		textDni.setBounds(80, 80, 80, 25);
+		textDni.setBounds(171, 80, 139, 25);
 		getContentPane().add(textDni);
 		
-		textNombre=new JTextField();
-		textNombre.setBounds(80, 120, 327, 25);
-		getContentPane().add(textNombre);
-		
-		textApellidos=new JTextField();
-		textApellidos.setBounds(80, 160, 327, 25);
-		getContentPane().add(textApellidos);
+		textIdP=new JTextField();
+		textIdP.setBounds(171, 120, 139, 25);
+		getContentPane().add(textIdP);
 		
 		botonModificar.addActionListener(this);
 		botonEliminar.addActionListener(this);
@@ -105,8 +101,8 @@ public class VentanaBuscar  extends JFrame implements ActionListener {
 	}
 
 
-	public void setCoordinador(CientificoController cientificoController) {
-		this.cientificoController=cientificoController;
+	public void setCoordinador(CPController cpController) {
+		this.cpController=cpController;
 	}
 
 
@@ -116,14 +112,14 @@ public class VentanaBuscar  extends JFrame implements ActionListener {
 		if (e.getSource()==botonGuardar)
 		{
 			try {
-				Cientifico cientifico=new Cientifico();
-				cientifico.setDNI(textDni.getText());
-				cientifico.setNomApels((textNombre.getText())+" "+(textApellidos.getText()));
+				Cientifico_Proyecto cp=new Cientifico_Proyecto();
+				cp.setDniC_fk(textDni.getText());
+				cp.setIdP_fk((textIdP.getText()));
 		
-				cientificoController.modificarCientifico(cientifico);
+				cpController.modificarCP(cp);
 				
 				if (CientificoServ.modificaCientifico==true) {
-					habilita(true, false, false, false, false, true, false, true, true);	
+					habilita(true, false,  true, false, true, true);	
 				}
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(null,"Error en el Ingreso de Datos","Error",JOptionPane.ERROR_MESSAGE);
@@ -133,32 +129,32 @@ public class VentanaBuscar  extends JFrame implements ActionListener {
 		
 		if (e.getSource()==botonBuscar)
 		{
-			Persona miPersona=personaController.buscarPersona(textCod.getText());
-			if (miPersona!=null)
+			Cientifico_Proyecto cp=cpController.buscarCP(textDni.getText());
+			if (cp!=null)
 			{
-				muestraPersona(miPersona);
+				muestraCP(cp);
 			}
-			else if(PersonaServ.consultaPersona==true){
-				JOptionPane.showMessageDialog(null, "La persona no Existe","Advertencia",JOptionPane.WARNING_MESSAGE);
+			else if(Cientifico_ProyectoServ.consultaCP==true){
+				JOptionPane.showMessageDialog(null, "El cientifico no Existe","Advertencia",JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		
 		if (e.getSource()==botonModificar)
 		{
-			habilita(false, true, true, true, true, false, true, false, false);
+			habilita(false,true,true,true,false,false);
 			
 		}
 		
 		if (e.getSource()==botonEliminar)
 		{
-			if (!textCod.getText().equals(""))
+			if (!textDni.getText().equals(""))
 			{
 				int respuesta = JOptionPane.showConfirmDialog(this,
-						"Esta seguro de eliminar la Persona?", "Confirmación",
+						"Esta seguro de eliminar el Cientifico?", "Confirmación",
 						JOptionPane.YES_NO_OPTION);
 				if (respuesta == JOptionPane.YES_NO_OPTION)
 				{
-					personaController.eliminarPersona(textCod.getText());
+					cpController.eliminarCP(textDni.getText());
 					limpiar();
 				}
 			}
@@ -177,15 +173,13 @@ public class VentanaBuscar  extends JFrame implements ActionListener {
 
 
 	/**
-	 * permite cargar los datos de la persona consultada
-	 * @param miPersona
+	 * permite cargar los datos del cientifico consultado
+	 * @param Cientifico
 	 */
-	private void muestraPersona(Persona miPersona) {
-		textNombre.setText(miPersona.getNombrePersona());
-		textEdad.setText(miPersona.getEdadPersona()+"");
-		textTelefono.setText(miPersona.getTelefonoPersona()+"");
-		textProfesion.setText(miPersona.getProfesionPersona());
-		habilita(true, false, false, false, false, true, false, true, true);
+	private void muestraCP(Cientifico_Proyecto cp) {
+		textIdP.setText(cp.getIdP_fk());
+		
+		habilita(true, false,true, false, true, true);
 	}
 
 
@@ -194,31 +188,28 @@ public class VentanaBuscar  extends JFrame implements ActionListener {
 	 */
 	public void limpiar()
 	{
-		textCod.setText("");
-		textNombre.setText("");
-		textProfesion.setText("");
-		habilita(true, false, false, false, false, true, false, true, true);
+		textDni.setText("");
+		textIdP.setText("");
+		
+		habilita(true, false, true, false, true, true);
 	}
 
 
 	/**
 	 * Permite habilitar los componentes para establecer una modificacion
-	 * @param codigo
-	 * @param nombre
-	 * @param edad
-	 * @param tel
-	 * @param profesion
-	 * @param cargo
+	 * @param dni
+	 * @param id
+	
 	 * @param bBuscar
 	 * @param bGuardar
 	 * @param bModificar
 	 * @param bEliminar
 	 */
-	public void habilita(boolean codigo, boolean nombre, boolean edad, boolean tel, boolean profesion,	 boolean bBuscar, boolean bGuardar, boolean bModificar, boolean bEliminar)
+	public void habilita(boolean dni, boolean id,boolean bBuscar, boolean bGuardar, boolean bModificar, boolean bEliminar)
 	{
-		textCod.setEditable(codigo);
-		textNombre.setEditable(nombre);
-		textProfesion.setEditable(profesion);
+		textDni.setEditable(dni);
+		textIdP.setEditable(id);
+		
 		botonBuscar.setEnabled(bBuscar);
 		botonGuardar.setEnabled(bGuardar);
 		botonModificar.setEnabled(bModificar);
