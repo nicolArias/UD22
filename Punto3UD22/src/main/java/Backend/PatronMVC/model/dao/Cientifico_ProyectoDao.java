@@ -68,7 +68,7 @@ public class Cientifico_ProyectoDao {
 		
 		Conexion conex= new Conexion();
 		try{
-			String consulta="UPDATE  Cientifico_Proyecto SET idP_fk = ? WHERE dniC_fk= ? ";
+			String consulta="UPDATE  Cientificos_Proyectos SET idP_fk = ? WHERE dniC_fk= ? ";
 			PreparedStatement estatuto = conex.getConnection().prepareStatement(consulta);
 			
             estatuto.setString(1, cP.getIdP_fk());
